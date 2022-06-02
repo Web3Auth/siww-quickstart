@@ -13,30 +13,29 @@ import styles from '../public/css/solana.module.css';
 import SolanaLogo from '../public/solana-logo.png';
 
 const Solana: React.FC = () => {
+    
     const { connection } = useConnection();
-    let walletAddress = "";
-
+    
     // if you use anchor, use the anchor hook instead
     // const wallet = useAnchorWallet();
     // const walletAddress = wallet?.publicKey.toString();
-
+    let walletAddress = "";
     const wallet = useWallet();
     if (wallet.connected && wallet.publicKey) {
         walletAddress = wallet.publicKey.toString()
     }
 
     const { publicKey, signMessage } = useWallet();
-    
-    // Domain and origin
-    const domain = window.location.host;
-    const origin = window.location.origin;
-
-    
-    let statement = "Sign in with Solana to the app.";
-
     const [siwsMessage, setSiwsMessage] = useState<SIWWeb3|null>();
     const [nonce, setNonce] = useState("");
     const [sign, setSignature] = useState("");
+
+    // Domain and origin
+    const domain = window.location.host;
+    const origin = window.location.origin;
+    let statement = "Sign in with Solana to the app.";
+
+    
 
     // Generate a message for signing
     // The nonce is generated on the server side 
