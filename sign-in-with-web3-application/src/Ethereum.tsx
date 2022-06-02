@@ -12,18 +12,18 @@ declare global {
   }
 }
 
-const MyWallet: React.FC = () => {
+const Ethereum: React.FC = () => {
 
+    const [siwwMessage, setSiwwMessage] = useState<SIWWeb3|null>();
+    const [sign, setSignature] = useState("");
+    const [publicKey, setPublicKey] = useState("");
+    const [currentProvider, setProvider] = useState<any>();
+  
     // Domain and origin
     const domain = window.location.host;
     const origin = window.location.origin;
 
     let statement = "Sign in with Ethereum to the app.";
-
-    const [siwsMessage, setSiwsMessage] = useState<SIWWeb3|null>();
-    const [sign, setSignature] = useState("");
-    const [publicKey, setPublicKey] = useState("");
-    const [currentProvider, setProvider] = useState<any>();
 
     const detectCurrentProvider = () => {
         let provider;
@@ -80,7 +80,7 @@ const MyWallet: React.FC = () => {
         };
         const network = "ethereum"
         let message = new SIWWeb3({ header, payload ,network});
-        setSiwsMessage(message);
+        setSiwwMessage(message);
         const messageText = message.prepareMessage();
         const web3 = new Web3(currentProvider);
         
@@ -125,8 +125,8 @@ const MyWallet: React.FC = () => {
                             t: "eip191",
                             s: sign
                         }
-                        const payload = siwsMessage!.payload;
-                        siwsMessage!.verify(payload, signature).then((resp: any) => {
+                        const payload = siwwMessage!.payload;
+                        siwwMessage!.verify(payload, signature).then((resp: any) => {
                             if (resp.success == true) {
                                 Swal.fire("Success","Signature Verified","success")
                             } else {
@@ -135,7 +135,7 @@ const MyWallet: React.FC = () => {
                         });
                     }}>Verify</button>
                     <button className={styles.web3auth} id='verify' onClick={e => {
-                        setSiwsMessage(null);
+                        setSiwwMessage(null);
                         setSignature("")
                     }}>Back to Wallet</button>
                 </>
@@ -145,4 +145,4 @@ const MyWallet: React.FC = () => {
     );
 };
 
-export default MyWallet;
+export default Ethereum;
